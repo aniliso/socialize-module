@@ -1,0 +1,17 @@
+{
+    "name": "Socialize",
+    "alias": "socialize",
+    "description": "",
+    "keywords": [],
+    "active": 1,
+    "order": 1,
+    "providers": [
+        "Modules\\Socialize\\Providers\\SocializeServiceProvider",
+        "Modules\\Socialize\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [
+        
+    ],
+    "requires": []
+}
