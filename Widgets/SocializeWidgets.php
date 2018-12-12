@@ -17,6 +17,23 @@ class SocializeWidgets
                 Cache::put('instagram.posts', $posts, $cachePeriod);
             }
             $posts = collect($posts)->take(9);
+
+            $publicPath = public_path('assets/socialize');
+
+            if(!\File::isDirectory($publicPath)) {
+                \File::makeDirectory($publicPath);
+            }
+
+            foreach ($posts as $post) {
+               $url      = $post->images->standard_resolution->url;
+               $file     = parse_url(basename($url));
+               $filepath = public_path('assets/socialize/'.$file['path']);
+               if(!\File::exists($filepath)) {
+                   \File::copy($url, $filepath);
+               }
+               $post->image = url('assets/socialize/'.$file['path']);
+            }
+
             return view('socialize::widgets.instagram', compact('posts'));
         }
         return null;
