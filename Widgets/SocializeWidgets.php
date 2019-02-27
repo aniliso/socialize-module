@@ -1,11 +1,11 @@
 <?php namespace Modules\Socialize\Widgets;
 
-use Vinkla\Instagram\Instagram;
+use Modules\Socialize\Services\Instagram\Instagram;
 use Cache;
 
 class SocializeWidgets
 {
-    public function instagram($account='', $cachePeriod = 3600)
+    public function instagram($account='', $cachePeriod = 3600, $limit=9)
     {
         try {
             $token = setting('socialize::instagram-token');
@@ -14,10 +14,10 @@ class SocializeWidgets
                     $posts = Cache::get('instagram.posts');
                 } else {
                     $instagram = new Instagram($token);
-                    $posts = $instagram->get();
+                    $posts = $instagram->media();
                     Cache::put('instagram.posts', $posts, $cachePeriod);
                 }
-                $posts = collect($posts)->take(9);
+                $posts = collect($posts)->take($limit);
 
                 $publicPath = public_path('assets/socialize');
 
